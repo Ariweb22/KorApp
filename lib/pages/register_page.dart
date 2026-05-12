@@ -117,11 +117,13 @@ class RegisterPage extends StatelessWidget {
             // BOTON CREAR CUENTA
             MiBoton(
 
-              onTap: () {
+              onTap: () async {
 
                 // GUARDAR DATOS
-                UsuarioData.correo = correoController.text;
-                UsuarioData.password = passwordController.text;
+             await UsuarioData.guardarUsuario(
+                correoController.text.trim(),
+                passwordController.text.trim(),
+              );
 
                 // MENSAJE
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,6 +1,8 @@
 import 'package:e401_ecommerce/components/mi_boton.dart';
 import 'package:e401_ecommerce/components/mi_textfield.dart';
 import 'package:e401_ecommerce/data/usuario_data.dart';
+import 'package:e401_ecommerce/pages/shop_page.dart';
+
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {
@@ -56,7 +58,9 @@ class IntroPage extends StatelessWidget {
                 // SUBTITULO
                 const Text(
                   'Productos Calidad Premium',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
 
                 const SizedBox(height: 40),
@@ -82,32 +86,64 @@ class IntroPage extends StatelessWidget {
                 // BOTON LOGIN
                 MiBoton(
 
-                  onTap: () {
+                  onTap: () async {
 
+                    // OBTENER DATOS GUARDADOS
+                    final correoGuardado =
+                        await UsuarioData.obtenerCorreo();
+
+                    final passwordGuardado =
+                        await UsuarioData.obtenerPassword();
+
+                    // PRINTS DEBUG
+                    print("Correo guardado: $correoGuardado");
+                    print("Password guardado: $passwordGuardado");
+
+                    // VALIDAR LOGIN
                     if (
-                      correoController.text == UsuarioData.correo &&
-                      passwordController.text == UsuarioData.password
+
+                      correoController.text.trim() ==
+                          correoGuardado.trim() &&
+
+                      passwordController.text.trim() ==
+                          passwordGuardado.trim()
+
                     ) {
 
-                      Navigator.pushNamed(context, '/shop_page');
+                      // IR A SHOP PAGE
+                      Navigator.push(
+
+                        context,
+
+                        MaterialPageRoute(
+
+                          builder: (context) => ShopPage(),
+
+                        ),
+                      );
 
                     } else {
 
+                      // ERROR LOGIN
                       ScaffoldMessenger.of(context).showSnackBar(
 
                         const SnackBar(
+
                           content: Text(
                             "Correo o contraseña incorrectos",
                           ),
                         ),
-
                       );
                     }
                   },
 
                   child: const Text(
+
                     "Iniciar Sesión",
-                    style: TextStyle(fontSize: 16),
+
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
 
@@ -120,19 +156,25 @@ class IntroPage extends StatelessWidget {
 
                   children: [
 
-                    const Text("¿No tienes cuenta? "),
+                    const Text(
+                      "¿No tienes cuenta? ",
+                    ),
 
                     GestureDetector(
 
                       onTap: () {
+
                         Navigator.pushNamed(
                           context,
                           '/register_page',
                         );
+
                       },
 
                       child: const Text(
+
                         "Registrarse",
+
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

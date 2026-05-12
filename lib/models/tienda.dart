@@ -2,52 +2,75 @@ import 'package:e401_ecommerce/models/producto.dart';
 import 'package:flutter/material.dart';
 
 class Tienda extends ChangeNotifier {
-  //Lista de productos
+
+  // LISTA DE EVENTOS
   final List<Producto> _tienda = [
+
     Producto(
-      nombre: 'Producto 1',
-      precio: 99.99,
-      descripcion: 'Velit duis eiusmod magna esse tempor amet.',
-      rutaImagen: 'assets/glasses.png',
+
+      nombre: "Apoyo a Comunidad",
+
+      precio: 0,
+
+      descripcion:
+          "Evento para recolectar alimentos y ropa para familias necesitadas.",
+
+      rutaImagen:
+          "lib/images/donacion1.png",
+
+      fecha: "25 Mayo 2026",
+
+      lugar: "Parque Central",
+
+      apoyoNecesario:
+          "Alimentos, ropa y apoyo económico",
+
     ),
+
     Producto(
-      nombre: 'Producto 2',
-      precio: 99.99,
-      descripcion: 'Et Lorem reprehenderit consequat velit.',
-      rutaImagen: 'assets/hoodie.png',
+
+      nombre: "Ayuda Escolar",
+
+      precio: 0,
+
+      descripcion:
+          "Recolección de útiles escolares para niños.",
+
+      rutaImagen:
+          "lib/images/donacion2.png",
+
+      fecha: "10 Junio 2026",
+
+      lugar: "Escuela Municipal",
+
+      apoyoNecesario:
+          "Cuadernos, mochilas y apoyo monetario",
+
     ),
-    Producto(
-      nombre: 'Producto 3',
-      precio: 99.99,
-      descripcion: 'Laborum tempor aute esse excepteur nulla nulla laboris anim elit nisi ea fugiat amet.',
-      rutaImagen: 'assets/shoes.png',
-    ),
-    Producto(
-      nombre: 'Producto 4',
-      precio: 99.99,
-      descripcion: 'Non et fugiat do qui est do est cillum velit culpa laboris in excepteur ex.',
-      rutaImagen: 'assets/watch.png',
-    ),
+
   ];
 
-  //Carrito de compras del usuario
-  List<Producto> _carrito = [];
+  // EVENTOS APOYADOS
+  final List<Producto> _carrito = [];
 
-  //Obtener la lista de productos
+  // GETTERS
   List<Producto> get tienda => _tienda;
 
-  //Obtener el carrito de compras
   List<Producto> get carrito => _carrito;
 
-  //método para agregar productos al carrito
-  void agregarAlCarrito(Producto producto) {
-    _carrito.add(producto);
+  // AGREGAR APOYO
+  void agregarAlCarrito(Producto item) {
+
+    _carrito.add(item);
+
     notifyListeners();
   }
 
-  //Método para eliminar productos del carrito
-  void eliminarDelCarrito(Producto producto) {
-    _carrito.remove(producto);
+  // ELIMINAR APOYO
+  void eliminarDelCarrito(Producto item) {
+
+    _carrito.remove(item);
+
     notifyListeners();
   }
 }
