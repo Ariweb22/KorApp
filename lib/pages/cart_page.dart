@@ -1,7 +1,9 @@
 import 'package:e401_ecommerce/components/mi_menu.dart';
 import 'package:e401_ecommerce/models/producto.dart';
 import 'package:e401_ecommerce/models/tienda.dart';
+
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -30,67 +32,144 @@ class CartPage extends StatelessWidget {
 
       backgroundColor: theme.surface,
 
-      drawer: MiMenu(),
+      drawer: const MiMenu(),
 
       body: carrito.isEmpty
 
           ? const Center(
+
               child: Text(
                 'Aún no has apoyado ningún evento',
               ),
             )
 
-          : ListView.builder(
+          : Column(
 
-              itemCount: carrito.length,
+              children: [
 
-              itemBuilder: (context, index) {
+                // LISTA DE APOYOS
+                Expanded(
 
-                final item = carrito[index];
+                  child: ListView.builder(
 
-                return Card(
+                    itemCount: carrito.length,
 
-                  margin: const EdgeInsets.all(12),
+                    itemBuilder: (context, index) {
 
-                  child: ListTile(
+                      final item = carrito[index];
 
-                    leading: Image.asset(
-                      item.rutaImagen,
-                      width: 50,
-                    ),
+                      return Card(
 
-                    title: Text(item.nombre),
+                        margin: const EdgeInsets.all(12),
 
-                    subtitle: Column(
+                        child: ListTile(
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                          leading: Image.asset(
 
-                      children: [
+                            item.rutaImagen,
 
-                        Text(item.fecha),
+                            width: 50,
 
-                        Text(item.lugar),
+                            errorBuilder:
+                                (context, error, stackTrace) {
 
-                      ],
-                    ),
+                              return const Icon(
+                                Icons.image_not_supported,
+                              );
+                            },
+                          ),
 
-                    trailing: IconButton(
+                          title: Text(item.nombre),
 
-                      onPressed: () =>
-                          eliminarApoyo(context, item),
+                          subtitle: Column(
 
-                      icon: const Icon(Icons.delete),
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
 
+                            children: [
+
+                              const SizedBox(height: 5),
+
+                              Text(item.fecha),
+
+                              Text(item.lugar),
+
+                            ],
+                          ),
+
+                          trailing: IconButton(
+
+                            onPressed: () =>
+                                eliminarApoyo(context, item),
+
+                            icon: const Icon(
+                              Icons.delete,
+                            ),
+
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                // BOTON IR A PAGAR
+                Padding(
+
+                  padding: const EdgeInsets.all(20),
+
+                  child: SizedBox(
+
+                    width: double.infinity,
+
+                    child: ElevatedButton(
+
+                      style: ElevatedButton.styleFrom(
+
+                        padding:
+                            const EdgeInsets.symmetric(
+                          vertical: 18,
+                        ),
+
+                        shape: RoundedRectangleBorder(
+
+                          borderRadius:
+                              BorderRadius.circular(15),
+
+                        ),
+                      ),
+
+                      onPressed: () {
+
+                        Navigator.pushNamed(
+                          context,
+                          '/payment_page',
+                        );
+
+                      },
+
+                      child: const Text(
+
+                        "Proceder al Pago",
+
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                );
-              },
+                ),
+              ],
             ),
     );
   }
 
   // ELIMINAR APOYO
-  void eliminarApoyo(BuildContext context, Producto item) {
+  void eliminarApoyo(
+    BuildContext context,
+    Producto item,
+  ) {
 
     showDialog(
 
@@ -98,7 +177,9 @@ class CartPage extends StatelessWidget {
 
       builder: (_) => AlertDialog(
 
-        title: const Text("Eliminar apoyo"),
+        title: const Text(
+          "Eliminar apoyo",
+        ),
 
         content: const Text(
           '¿Deseas eliminar este evento de tus apoyos?',
@@ -108,10 +189,12 @@ class CartPage extends StatelessWidget {
 
           MaterialButton(
 
-            onPressed: () => Navigator.pop(context),
+            onPressed: () =>
+                Navigator.pop(context),
 
-            child: const Text('Cancelar'),
-
+            child: const Text(
+              'Cancelar',
+            ),
           ),
 
           MaterialButton(
@@ -120,12 +203,15 @@ class CartPage extends StatelessWidget {
 
               Navigator.pop(context);
 
-              context.read<Tienda>().eliminarDelCarrito(item);
+              context
+                  .read<Tienda>()
+                  .eliminarDelCarrito(item);
 
             },
 
-            child: const Text('Eliminar'),
-
+            child: const Text(
+              'Eliminar',
+            ),
           ),
         ],
       ),

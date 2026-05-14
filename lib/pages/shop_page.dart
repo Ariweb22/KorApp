@@ -20,7 +20,7 @@ class ShopPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: ()=>Navigator.pushNamed(context, '/cart_page'),
-            icon: Icon(Icons.shopping_cart_checkout_outlined)
+            icon: Icon( Icons.volunteer_activism)
           )
         ],
       ),

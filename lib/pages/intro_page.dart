@@ -37,7 +37,7 @@ class IntroPage extends StatelessWidget {
 
                 // LOGO
                 Icon(
-                  Icons.shopping_bag,
+                  Icons.volunteer_activism,
                   size: 90,
                   color: theme.inversePrimary,
                 ),
@@ -46,7 +46,7 @@ class IntroPage extends StatelessWidget {
 
                 // TITULO
                 const Text(
-                  'Tienda Minimalista',
+                  'Apoyo y recaudacion',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class IntroPage extends StatelessWidget {
 
                 // SUBTITULO
                 const Text(
-                  'Productos Calidad Premium',
+                  'Cada grano de arena cuenta',
                   style: TextStyle(
                     fontSize: 16,
                   ),
