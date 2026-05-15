@@ -1,6 +1,8 @@
 import 'package:e401_ecommerce/components/mi_boton.dart';
 import 'package:e401_ecommerce/models/producto.dart';
+import 'package:e401_ecommerce/models/tienda.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetalleEventoPage extends StatelessWidget {
 
@@ -14,11 +16,17 @@ class DetalleEventoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final theme = Theme.of(context).colorScheme;
+
+    final cantidadController = TextEditingController();
+
     return Scaffold(
 
       appBar: AppBar(
         title: Text(producto.nombre),
       ),
+
+      backgroundColor: theme.surface,
 
       body: SingleChildScrollView(
 
@@ -32,8 +40,15 @@ class DetalleEventoPage extends StatelessWidget {
 
             // IMAGEN
             ClipRRect(
+
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(producto.rutaImagen),
+
+              child: Image.asset(
+                producto.rutaImagen,
+                height: 250,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -47,23 +62,70 @@ class DetalleEventoPage extends StatelessWidget {
               ),
             ),
 
+            IconButton(
+
+                    onPressed: () {
+
+                      context
+                          .read<Tienda>()
+                          .agregarFavorito(producto);
+
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(
+
+                        const SnackBar(
+                          content: Text(
+                            "Agregado a favoritos ❤️",
+                          ),
+                        ),
+                      );
+                    },
+
+                    icon: const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
+                  ),
+
             const SizedBox(height: 15),
 
             // FECHA
-            Text(
-              "Fecha: ${producto.fecha}",
-              style: const TextStyle(fontSize: 18),
+            Row(
+              children: [
+
+                const Icon(Icons.calendar_month),
+
+                const SizedBox(width: 10),
+
+                Text(
+                  producto.fecha,
+                  style: const TextStyle(fontSize: 18),
+                ),
+
+              ],
             ),
 
             const SizedBox(height: 10),
 
             // LUGAR
-            Text(
-              "Lugar: ${producto.lugar}",
-              style: const TextStyle(fontSize: 18),
+            Row(
+              children: [
+
+                const Icon(Icons.location_on),
+
+                const SizedBox(width: 10),
+
+                Expanded(
+                  child: Text(
+                    producto.lugar,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+
+              ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
 
             // DESCRIPCION
             const Text(
@@ -78,7 +140,10 @@ class DetalleEventoPage extends StatelessWidget {
 
             Text(
               producto.descripcion,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: theme.inversePrimary,
+              ),
             ),
 
             const SizedBox(height: 25),
@@ -96,12 +161,15 @@ class DetalleEventoPage extends StatelessWidget {
 
             Text(
               producto.apoyoNecesario,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: theme.inversePrimary,
+              ),
             ),
 
             const SizedBox(height: 30),
 
-            // DONACION MONETARIA
+            // DONACION
             const Text(
               "Donación Monetaria",
               style: TextStyle(
@@ -114,11 +182,15 @@ class DetalleEventoPage extends StatelessWidget {
 
             TextField(
 
+              controller: cantidadController,
+
               keyboardType: TextInputType.number,
 
               decoration: InputDecoration(
 
                 hintText: "Cantidad a donar",
+
+                prefixIcon: const Icon(Icons.attach_money),
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -126,26 +198,46 @@ class DetalleEventoPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 35),
 
             // BOTON
             MiBoton(
 
               onTap: () {
 
-                showDialog(
-                  context: context,
-                  builder: (_) => const AlertDialog(
-                    content: Text(
-                      "Gracias por apoyar esta causa ❤️",
+                // VALIDAR CANTIDAD
+                if (cantidadController.text.isEmpty) {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+
+                    const SnackBar(
+                      content: Text(
+                        "Ingresa una cantidad para donar",
+                      ),
                     ),
-                  ),
+
+                  );
+
+                  return;
+                }
+
+                // AGREGAR AL CARRITO
+                context.read<Tienda>().agregarAlCarrito(producto);
+
+                // IR A PAGOS
+                Navigator.pushNamed(
+                  context,
+                  '/payment_page',
                 );
 
               },
 
-              child: const Text("Apoyar"),
+              child: const Text(
+                "Continuar al Pago",
+              ),
             ),
+
+            const SizedBox(height: 20),
 
           ],
         ),

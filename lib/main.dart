@@ -9,10 +9,13 @@ import 'package:e401_ecommerce/pages/perfil_page.dart';
 import 'package:e401_ecommerce/pages/register_page.dart';
 import 'package:e401_ecommerce/pages/settings_page.dart';
 import 'package:e401_ecommerce/pages/shop_page.dart';
+import 'package:e401_ecommerce/pages/favoritos_page.dart';
+import 'package:e401_ecommerce/pages/splash_page.dart';
 
 import 'package:e401_ecommerce/themes/dark_mode.dart';
 import 'package:e401_ecommerce/themes/light_mode.dart';
 import 'package:e401_ecommerce/themes/theme_provider.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -59,7 +62,7 @@ class MainApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
 
-      home: IntroPage(),
+      home: const SplashPage(),
 
       // TEMAS
       theme: lightMode,
@@ -95,6 +98,12 @@ class MainApp extends StatelessWidget {
 
         // PAGO
         '/payment_page': (context) => const PaymentPage(),
+
+        //Favoritos
+        '/favoritos_page': (context) => const FavoritosPage(),
+
+        
+
 
         // MIS DONACIONES
         '/mis_donaciones_page': (context) =>

@@ -15,8 +15,7 @@ class Tienda extends ChangeNotifier {
       descripcion:
           "Evento para recolectar alimentos y ropa para familias necesitadas.",
 
-      rutaImagen:
-          "lib/images/donacion1.png",
+      rutaImagen: "assets/images/donacion1.png",
 
       fecha: "25 Mayo 2026",
 
@@ -24,6 +23,8 @@ class Tienda extends ChangeNotifier {
 
       apoyoNecesario:
           "Alimentos, ropa y apoyo económico",
+
+      progreso: 0.70,
 
     ),
 
@@ -36,8 +37,7 @@ class Tienda extends ChangeNotifier {
       descripcion:
           "Recolección de útiles escolares para niños.",
 
-      rutaImagen:
-          "lib/images/donacion2.png",
+      rutaImagen: "assets/images/donacion2.png",
 
       fecha: "10 Junio 2026",
 
@@ -46,19 +46,26 @@ class Tienda extends ChangeNotifier {
       apoyoNecesario:
           "Cuadernos, mochilas y apoyo monetario",
 
+      progreso: 0.45,
+
     ),
 
   ];
 
-  // EVENTOS APOYADOS
+  // CARRITO
   final List<Producto> _carrito = [];
+
+  // FAVORITOS
+  final List<Producto> _favoritos = [];
 
   // GETTERS
   List<Producto> get tienda => _tienda;
 
   List<Producto> get carrito => _carrito;
 
-  // AGREGAR APOYO
+  List<Producto> get favoritos => _favoritos;
+
+  // AGREGAR AL CARRITO
   void agregarAlCarrito(Producto item) {
 
     _carrito.add(item);
@@ -66,10 +73,29 @@ class Tienda extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ELIMINAR APOYO
+  // ELIMINAR DEL CARRITO
   void eliminarDelCarrito(Producto item) {
 
     _carrito.remove(item);
+
+    notifyListeners();
+  }
+
+  // AGREGAR FAVORITO
+  void agregarFavorito(Producto producto) {
+
+    if (!_favoritos.contains(producto)) {
+
+      _favoritos.add(producto);
+
+      notifyListeners();
+    }
+  }
+
+  // ELIMINAR FAVORITO
+  void eliminarFavorito(Producto producto) {
+
+    _favoritos.remove(producto);
 
     notifyListeners();
   }

@@ -1,6 +1,5 @@
 import 'package:e401_ecommerce/models/producto.dart';
 import 'package:e401_ecommerce/pages/detalle_evento_page.dart';
-
 import 'package:flutter/material.dart';
 
 class MiTarjetaProducto extends StatelessWidget {
@@ -30,6 +29,7 @@ class MiTarjetaProducto extends StatelessWidget {
             builder: (context) => DetalleEventoPage(
               producto: producto,
             ),
+
           ),
         );
       },
@@ -37,77 +37,85 @@ class MiTarjetaProducto extends StatelessWidget {
       child: Container(
 
         margin: const EdgeInsets.all(10),
-
         padding: const EdgeInsets.all(20),
 
-        width: 320,
-
         decoration: BoxDecoration(
-
           color: theme.primary,
-
           borderRadius: BorderRadius.circular(20),
-
         ),
+
+        width: 320,
 
         child: SingleChildScrollView(
 
           child: Column(
 
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
 
               // IMAGEN
-              Container(
+              AspectRatio(
 
-                height: 220,
+                aspectRatio: 1.2,
 
-                decoration: BoxDecoration(
+                child: Container(
 
-                  color: theme.secondary,
+                  decoration: BoxDecoration(
+                    color: theme.secondary,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
 
-                  borderRadius:
-                      BorderRadius.circular(20),
+                  child: ClipRRect(
 
-                ),
+                    borderRadius: BorderRadius.circular(20),
 
-                padding: const EdgeInsets.all(20),
+                    child: Image.asset(
 
-                child: Center(
+                      producto.rutaImagen,
 
-                  child: Image.asset(
+                      fit: BoxFit.cover,
 
-                    producto.rutaImagen,
+                      errorBuilder: (
+                        context,
+                        error,
+                        stackTrace,
+                      ) {
 
-                    fit: BoxFit.contain,
+                        // PLACEHOLDER GRIS
+                        return Container(
 
-                    errorBuilder:
-                        (context, error, stackTrace) {
+                          color: Colors.grey.shade300,
 
-                      return const Icon(
-                        Icons.image_not_supported,
-                        size: 80,
-                      );
-                    },
+                          child: const Center(
+
+                            child: Icon(
+                              Icons.image,
+                              size: 70,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
               // NOMBRE
               Text(
 
                 producto.nombre,
 
+                maxLines: 1,
+
+                overflow: TextOverflow.ellipsis,
+
                 style: const TextStyle(
-
                   fontWeight: FontWeight.bold,
-
-                  fontSize: 22,
-
+                  fontSize: 24,
                 ),
               ),
 
@@ -118,30 +126,33 @@ class MiTarjetaProducto extends StatelessWidget {
 
                 producto.descripcion,
 
+                maxLines: 2,
+
+                overflow: TextOverflow.ellipsis,
+
                 style: TextStyle(
-
                   color: theme.inversePrimary,
-
-                  height: 1.4,
-
+                  fontSize: 15,
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
               // FECHA
               Row(
 
                 children: [
 
-                  const Icon(
-                    Icons.calendar_month,
-                  ),
+                  const Icon(Icons.calendar_month),
 
                   const SizedBox(width: 8),
 
                   Expanded(
-                    child: Text(producto.fecha),
+
+                    child: Text(
+                      producto.fecha,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -153,16 +164,48 @@ class MiTarjetaProducto extends StatelessWidget {
 
                 children: [
 
-                  const Icon(
-                    Icons.location_on,
-                  ),
+                  const Icon(Icons.location_on),
 
                   const SizedBox(width: 8),
 
                   Expanded(
-                    child: Text(producto.lugar),
+
+                    child: Text(
+                      producto.lugar,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // PORCENTAJE
+              Text(
+
+                "${(producto.progreso * 100).toInt()}% completado",
+
+                style: TextStyle(
+                  color: theme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // BARRA
+              ClipRRect(
+
+                borderRadius: BorderRadius.circular(10),
+
+                child: LinearProgressIndicator(
+
+                  value: producto.progreso,
+
+                  minHeight: 10,
+
+                  backgroundColor: Colors.grey.shade300,
+                ),
               ),
 
               const SizedBox(height: 25),
@@ -172,17 +215,13 @@ class MiTarjetaProducto extends StatelessWidget {
 
                 width: double.infinity,
 
-                padding:
-                    const EdgeInsets.symmetric(
-                  vertical: 15,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 14),
 
                 decoration: BoxDecoration(
 
                   color: theme.secondary,
 
-                  borderRadius:
-                      BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15),
 
                 ),
 
@@ -193,9 +232,7 @@ class MiTarjetaProducto extends StatelessWidget {
                     "Ver Detalles",
 
                     style: TextStyle(
-
                       fontWeight: FontWeight.bold,
-
                     ),
                   ),
                 ),

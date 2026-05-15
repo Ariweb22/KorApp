@@ -78,21 +78,53 @@ class ComprobantePage extends StatelessWidget {
               ),
 
               const SizedBox(height: 40),
+ElevatedButton(
 
-              ElevatedButton(
-                onPressed: () {
-                 Navigator.pushNamedAndRemoveUntil(
+  style: ElevatedButton.styleFrom(
 
-                    context,
+    backgroundColor:
+        Theme.of(context).colorScheme.primary,
 
-                    '/mis_donaciones_page',
+    foregroundColor:
+        Theme.of(context).colorScheme.inversePrimary,
 
-                    (route) => false,
+    padding: const EdgeInsets.symmetric(
+      horizontal: 25,
+      vertical: 12,
+    ),
 
-                  );
-                },
-                child: const Text("Volver"),
-              ),
+    elevation: 0,
+
+    shape: RoundedRectangleBorder(
+
+      borderRadius: BorderRadius.circular(12),
+
+    ),
+  ),
+
+  onPressed: () {
+
+    Navigator.pushNamedAndRemoveUntil(
+
+      context,
+
+      '/mis_donaciones_page',
+
+      (route) => false,
+
+    );
+  },
+
+  child: const Text(
+
+    "Volver",
+
+    style: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+    ),
+  ),
+)
             ],
           ),
         ),

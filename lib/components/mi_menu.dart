@@ -96,6 +96,25 @@ class MiMenu extends StatelessWidget {
                 },
               ),
 
+              //Favoritos
+
+              MiElementoLista(
+
+              text: "Favoritos",
+
+              icon: Icons.favorite,
+
+              onTap: () {
+
+                Navigator.pop(context);
+
+                Navigator.pushNamed(
+                  context,
+                  '/favoritos_page',
+                );
+              },
+            ),
+
               // PERFIL
               MiElementoLista(
 
